@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<data>
+	<doors>
+		<race>
+			<card id="10000" name="Human" effect="" info=""/>
+			<card id="10001" count="1" name="Elf" effect="" info=""/>
+			<card id="10002" count="0" name="Dwarf" effect="" info=""/>
+			<card id="10003" count="0" name="Halfling" effect="" info=""/>
+		</race>
+		<professon>
+			<card id="20000" name="Commoner" effect="" info=""/>
+			<card id="20001" count="1" name="Fighter" effect="" info=""/>
+			<card id="20002" count="0" name="Wizard" effect="" info=""/>
+			<card id="20003" count="0" name="Thief" effect="" info=""/>
+			<card id="20004" count="0" name="Cleric" effect="" info=""/>			
+		</professon>
+		<monster>
+			<card id="30000" name="Goblin" level="1" effect="" info=""/>
+			<card id="30001" name="Plant" level="1" effect="" info=""/>
+			<card id="30002" name="Slime" level="1" effect="" info=""/>
+			<card id="30003" name="Octaedr" level="1" effect="" info=""/>
+			<card id="30004" name="Pasyuk" level="1" effect="" info=""/>
+			<card id="30005" name="Voshki" level="1" effect="" info=""/>
+			<card id="30006" name="Pitbuldog" level="2" effect="" info=""/>
+			<card id="30007" name="Flying Frogs" level="2" effect="" info=""/>
+			<card id="30008" name="Cipa" level="2" effect="" info=""/>
+			<card id="30009" name="Skeleton" level="2" effect="" info=""/>
+		</monster>
+		<curse>
+			<card id="40000" name="Change race" effect="" info=""/>
+			<card id="40001" name="Lose small item" effect="" info=""/>
+			<card id="40002" name="Lose boots" effect="" info=""/>
+			<card id="40003" name="Lose level" effect="" info=""/>
+			<card id="40004" name="Lose class" effect="" info=""/>
+		</curse>
+		<spell>
+		</spell>
+		<event>
+		</event>
+	</doors>
+	<golds>
+		<items>
+			<card id="80001" name="Long sword" type="101" size="10" effect="4001" power="1"/>
+			<card id="80002" name="Short bow" type="101" size="10" effect="4001" power="1"/>
+			<card id="80003" name="Greate sword" type="101" size="11" cell="2" effect="4001" power="2"/>
+			<card id="80004" name="Steel plate" type="102" size="11" effect="4001" power="3"/>
+			<card id="80005" name="Leather jacket" type="102" size="10" effect="4001" power="2"/>
+			<card id="80006" name="Chained cap" type="104" size="10" effect="4001" power="1"/>
+			<card id="80006" name="Strong boots" type="103" size="10" effect="4001" power="1"/>
+		</items>
+	</golds>
+	<item_types>
+		<item id="101" type="weapon" />
+		<item id="102" type="armor" />
+		<item id="103" type="boots" />
+		<item id="104" type="cap" />
+	</item_types>
+	<item_size>
+		<size id="10" type="small"/>
+		<size id="11" type="big"/>
+	</item_size>
+	<equip_map>
+		<item place="head" type="104" cell="1"/>
+		<item place="hand" type="101" cell="2"/>
+		<item place="body" type="102" cell="1" />
+		<item place="legs" type="103" cell="1" />
+	</equip_map>
+	<effects>
+		<effect id="1001" target="player" property="level" action="increase" />
+		<effect id="1002" target="player" property="level" action="decrease" />
+		<effect id="2001" target="player" property="profession" action="change"/>
+		<effect id="4001" target="player" property="rating" action="increase" />
+		<effect id="4001" target="player" property="rating" action="decrease" />
+	</effects>
+</data>
