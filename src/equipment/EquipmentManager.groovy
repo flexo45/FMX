@@ -1,40 +1,18 @@
 package equipment
 
 import cards.Item
-import dao.CardsManagerDao
+import gamedata.CardDataManager
 import itemmanager.ItemType
 
 class EquipmentManager {
 
-    private static List<Map> equipmentItemList = CardsManagerDao.getEquipmentMap()
-
-    public static List<Map> getEquipmentMap(){return equipmentItemList}
-
-    public static List<String> getEquipmentPlaces(){
-        List<String> list = new ArrayList<>()
-
-        equipmentItemList.each {
-            list.add(it.get('name').toString())
-        }
-
-        return list
-    }
+    private static List<EquipmentItem> equipmentItemList = CardDataManager.instance.getEquipmentMap()
 
     public static EquipmentItem getEquipmentItem(ItemType itemType){
         EquipmentItem item = null
         equipmentItemList.each {
-            if(((EquipmentItem)it.get('item')).itemType.equals(itemType)){
-                item = (EquipmentItem)it.get('item')
-            }
-        }
-        return item
-    }
-
-    public static EquipmentItem getEquipmentItem(String place){
-        EquipmentItem item = null
-        equipmentItemList.each {
-            if(it.get('name').equals(place)){
-                item = (EquipmentItem)it.get('item')
+            if(it.itemType.name.equals(itemType.name)){
+                item = it
             }
         }
         return item
@@ -43,19 +21,17 @@ class EquipmentManager {
     public static String getPlace(ItemType itemType){
         String place = ""
         equipmentItemList.each {
-            if(((EquipmentItem)it.get('item')).itemType.equals(itemType)){
-                place = it.get('name')
+            if(it.itemType.name.equals(itemType.name)){
+                place = it.place
             }
         }
         return place
     }
 
-
-
     public static boolean isEquipment(Item item){
         boolean result = false
         equipmentItemList.each {
-            if(((EquipmentItem)it.get('item')).itemType.equals(item.type)){
+            if(it.itemType.name.equals(item.type.name)){
                 result = true
             }
         }

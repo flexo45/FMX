@@ -3,7 +3,6 @@ package ui.gametable
 import cards.Item
 import cards.Profession
 import cards.Race
-import equipment.Equipment
 import equipment.EquipmentItem
 import equipment.EquipmentManager
 import gamemanager.ActionProcessor
@@ -89,6 +88,7 @@ class GameTableModel implements GameTableEvents {
                 player_info.add([key: 'Level', value: it.level])
                 player_info.add([key: 'Class', value: ((Profession)it.c1ass).name])
                 player_info.add([key: 'Race', value: ((Race)it.race).name])
+                player_info.add([key: 'Rating', value: it.getBaseRating()])
             }
         }
     }
@@ -100,11 +100,12 @@ class GameTableModel implements GameTableEvents {
 
     @Override
     synchronized void equipmentChangedNotify() {
+        player_equip.clear()
         GameProcessor.instance.getPlayer().equipment.equipment.each {
             EquipmentItem eIt = (EquipmentItem)it.get('eq_item');
             Item item = (Item)it.get('item')
 
-            player_equip.add([type: EquipmentManager.getPlace(eIt.itemType), name: item.name])
+            player_equip.add([place: EquipmentManager.getPlace(eIt.itemType), name: item.name])
         }
     }
 

@@ -47,4 +47,5 @@ public abstract class AbstractDeck implements IDeck {
     @Override
     public List<ICard> getDeck() { return deck; }
 
+
 }

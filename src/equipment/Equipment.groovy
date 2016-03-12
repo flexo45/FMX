@@ -6,18 +6,26 @@ class Equipment {
 
     List<Map> equipment = []
 
-    public void addItem(Item item){
+    public List<Item> getAllItems(){
+        ArrayList<Item> items = []
+        equipment.each {
+            items.add((Item)it.get('item'))
+        }
+        return items
+    }
+
+    public void addItem(Item item) throws NoFreeCellException, NotEquipmenItemException{
         if(EquipmentManager.isEquipment(item)){
             EquipmentItem equipmentItem = EquipmentManager.getEquipmentItem(item.type)
             if(getEitherItems(equipmentItem).count(Map) < equipmentItem.maxCells){
                 equipment.add([eq_item: equipmentItem, item: item])
             }
             else {
-                throw new Exception("NO_FREE_CELL_EXCEPTION")
+                throw new NoFreeCellException("NO_FREE_CELL_EXCEPTION")
             }
         }
         else {
-            throw new Exception("NOT_EQUIPMENT_EXCEPTION")
+            throw new NotEquipmenItemException("NOT_EQUIPMENT_EXCEPTION")
         }
     }
 

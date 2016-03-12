@@ -15,16 +15,16 @@
 			<card id="20004" count="0" name="Cleric" effect="" info=""/>			
 		</professon>
 		<monster>
-			<card id="30000" name="Goblin" level="1" effect="" info=""/>
-			<card id="30001" name="Plant" level="1" effect="" info=""/>
-			<card id="30002" name="Slime" level="1" effect="" info=""/>
-			<card id="30003" name="Octaedr" level="1" effect="" info=""/>
-			<card id="30004" name="Pasyuk" level="1" effect="" info=""/>
-			<card id="30005" name="Voshki" level="1" effect="" info=""/>
-			<card id="30006" name="Pitbuldog" level="2" effect="" info=""/>
-			<card id="30007" name="Flying Frogs" level="2" effect="" info=""/>
-			<card id="30008" name="Cipa" level="2" effect="" info=""/>
-			<card id="30009" name="Skeleton" level="2" effect="" info=""/>
+			<card id="30000" name="Goblin" level="1" effect="" obscenity="1002" obscenity_value="1" gold="1" info=""/>
+			<card id="30001" name="Plant" level="1" effect="" obscenity="1002" obscenity_value="1" gold="1" info=""/>
+			<card id="30002" name="Slime" level="1" effect="" obscenity="1002" obscenity_value="1" gold="1" info=""/>
+			<card id="30003" name="Octaedr" level="1" effect="" obscenity="1002" obscenity_value="1" gold="1" info=""/>
+			<card id="30004" name="Pasyuk" level="1" effect="" obscenity="1002" obscenity_value="1" gold="1" info=""/>
+			<card id="30005" name="Voshki" level="1" effect="" obscenity="1002" obscenity_value="1" gold="1" info=""/>
+			<card id="30006" name="Pitbuldog" level="2" effect="" obscenity="1002" obscenity_value="2" gold="1" info=""/>
+			<card id="30007" name="Flying Frogs" level="2" effect="" obscenity="1002" obscenity_value="2" gold="1" info=""/>
+			<card id="30008" name="Cipa" level="2" effect="" obscenity="1002" obscenity_value="2" gold="1" info=""/>
+			<card id="30009" name="Skeleton" level="2" effect="" obscenity="1002" obscenity_value="2" gold="1" info=""/>
 		</monster>
 		<curse>
 			<card id="40000" name="Change race" effect="" info=""/>
@@ -70,6 +70,6 @@
 		<effect id="1002" target="player" property="level" action="decrease" />
 		<effect id="2001" target="player" property="profession" action="change"/>
 		<effect id="4001" target="player" property="rating" action="increase" />
-		<effect id="4001" target="player" property="rating" action="decrease" />
+		<effect id="4002" target="player" property="rating" action="decrease" />
 	</effects>
 </data>

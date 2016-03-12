@@ -6,7 +6,8 @@ import cards.Monster
 import cards.Profession
 import cards.Race
 import cards.Spell
-import equipment.EquipmentManager
+import equipment.NoFreeCellException
+import equipment.NotEquipmenItemException
 import fightmanager.Fight
 import interfaces.ICard
 import log.Log
@@ -20,17 +21,23 @@ class PlayerActions {
 
         if(GameProcessor.instance.cardForUsing != null){
             Item item = ((Item)GameProcessor.instance.cardForUsing)
-            if(EquipmentManager.isEquipment(item)){
+            try{
                 GameProcessor.instance.getPlayer().equipment.addItem(item)
                 GameProcessor.instance.getPlayer().hand.remove(item)
+                Log.print(this, "Item was used: ${GameProcessor.instance.cardForUsing.name}")
+            }
+            catch (NoFreeCellException e){
+                InfoPopup.initialize("No free cell for item $item")
+            }
+            catch (NotEquipmenItemException e){
+                InfoPopup.initialize("Item $item can't equiped")
             }
         }
 
         GameProcessor.instance.view.gameInfoChangedNotify()
         GameProcessor.instance.view.playerHandChangedNotify()
         GameProcessor.instance.view.equipmentChangedNotify()
-
-        Log.print(this, "Item was used: ${GameProcessor.instance.cardForUsing.name}")
+        GameProcessor.instance.view.playersChangedNotify()
     }
 
     static void fightWithMonsterFromHand(){

@@ -1,6 +1,6 @@
 package gamemanager
 
-import dao.GameManagerDao
+import gamedata.GameDataManager
 import decks.DoorsDeck
 import decks.GoldsDeck
 import fightmanager.Fight
@@ -63,7 +63,7 @@ class GameProcessor {
     }
 
     public void loadGame(String gameName){
-        this.game = GameManagerDao.loadGame(gameName)
+        this.game = GameDataManager.instance.getGame(gameName)
 
         currentPlayer = game.playerList.find{ !it.npc }
 
@@ -95,7 +95,7 @@ class GameProcessor {
         def d_class
         def game_name = ""
         players.each {game_name += it.name + ' '}
-
+/*
         CardManager.instance.doorSet.each {
             c ->
             if((String)c.get('id') == '10000'){
@@ -111,11 +111,11 @@ class GameProcessor {
                 }
             }
         }
-
+*/
         Log.print(this, "new_game_processor, default race: $d_race")
         Log.print(this, "new_game_processor, default class: $d_class")
         Log.print(this, "new_game_processor, door deck: $newDoorsDeck")
-
+/*
         CardManager.instance.goldSet.each {
             c ->
                 Integer i = Integer.parseInt((String)c.get('count'))
@@ -123,7 +123,7 @@ class GameProcessor {
                     newGoldsDeck.add((ICard)c.get('card'))
                 }
         }
-
+*/
         Log.print(this, "gold deck: $newGoldsDeck")
 
         players.each {

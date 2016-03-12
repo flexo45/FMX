@@ -12,4 +12,10 @@ class Game {
     IRace defaultRace
     IClass defaultClass
     String gameName
+
+    @Override
+    public String toString(){
+        return "game[gameName:$gameName, playerList:$playerList, turn:$turn, doors_deck:$doors" +
+                ", golds_deck:$golds, defaultRace:$defaultRace, defaultClass:$defaultClass]"
+    }
 }

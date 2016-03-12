@@ -10,6 +10,6 @@ public class Spell extends BaseCard {
 
     @Override
     public String toString(){
-        return getClass().getTypeName() + ":" + getName();
+        return "spell[name:" + getName() + "]";
     }
 }

@@ -1,13 +1,19 @@
 package ui.logger
 
+import java.awt.Color
 import groovy.swing.SwingBuilder
+
+import javax.swing.JTextArea
 import javax.swing.WindowConstants
+import java.awt.Font
 import java.beans.PropertyChangeListener
 
 class LoggerView {
     static SwingBuilder sb = new SwingBuilder()
 
-    static def initialize(){
+    public static JTextArea textArea
+
+    /*static def initialize(){
         sb.frame(title: "FMX - Logger", defaultCloseOperation: WindowConstants.DISPOSE_ON_CLOSE, size: [800, 600], show: true){
             scrollPane{
                 table{
@@ -22,6 +28,17 @@ class LoggerView {
                     e ->
                         p_log.fireTableDataChanged()
                 } as PropertyChangeListener)
+            }
+        }
+    }*/
+
+    static def initialize(){
+        sb.frame(title: "FMX - Logger", defaultCloseOperation: WindowConstants.DISPOSE_ON_CLOSE, size: [800, 600], show: true){
+            scrollPane{
+                textArea = textArea(background: Color.BLACK, caretColor: Color.WHITE
+                        , disabledTextColor: Color.WHITE, enabled: false){
+
+                }
             }
         }
     }

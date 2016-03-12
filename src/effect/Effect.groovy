@@ -8,6 +8,6 @@ class Effect {
 
     @Override
     public String toString(){
-        return "$action the $property on $target"
+        return "effect[$action the $property on $target]"
     }
 }

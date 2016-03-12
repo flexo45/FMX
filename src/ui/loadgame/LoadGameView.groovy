@@ -6,9 +6,6 @@ import groovy.swing.SwingBuilder
 import javax.swing.BoxLayout
 import javax.swing.JList
 
-/**
- * Created by m.guriev on 05.02.2016.
- */
 class LoadGameView {
     static SwingBuilder sb = new SwingBuilder()
 

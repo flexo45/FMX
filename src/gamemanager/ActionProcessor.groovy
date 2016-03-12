@@ -1,6 +1,6 @@
 package gamemanager
 
-import dao.GameManagerDao
+import gamedata.GameDataManager
 import fightmanager.Fight
 import npcmanager.NPCProcessor
 import ui.gametable.ActionListManager
@@ -9,7 +9,7 @@ class ActionProcessor {
     static void processActions(String action){
         switch (action){
             case ActionListManager.SAVE:
-                GameManagerDao.saveGame(GameProcessor.instance.game)
+                GameDataManager.instance.saveGame(GameProcessor.instance.game)
                 break
             case ActionListManager.OPEN_DOOR:
                 PlayerActions.openDoor()

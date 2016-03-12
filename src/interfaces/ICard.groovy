@@ -1,9 +1,12 @@
 package interfaces
 
-/**
- * Created by m.guriev on 06.02.2016.
- */
+import effect.Effect
+
 public interface ICard {
     String getName()
     String getInfo()
+    Effect getEffect()
+    void setName(String name)
+    void setInfo(String info)
+    void setEffect(Effect effect)
 }
