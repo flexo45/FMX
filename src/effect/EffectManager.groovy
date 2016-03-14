@@ -46,6 +46,25 @@ class EffectManager {
                         throw new Exception("invalid acion: $effect.action type")
                     }
                 }
+                else if(effect.property.equals(Property.RACE)){
+                    if(effect.action.equals(Action.CHANGE)){
+                        (target as Player).c1ass //new Race
+                    }
+                    else if(effect.action.equals(Action.LOSE)){
+                        (target as Player).c1ass = GameProcessor.instance.game.defaultClass
+                    }
+                    else {
+                        throw new Exception("invalid acion: $effect.action type")
+                    }
+                }
+                else if(effect.property.equals(Property.ITEM)){
+                    if(effect.action.equals(Action.LOSE)){
+                        (target as Player).equipment //remove item of effect.itemSize or effect.itemType
+                    }
+                    else {
+                        throw new Exception("invalid acion: $effect.action type")
+                    }
+                }
                 else {
                     throw new Exception("invalid property type")
                 }

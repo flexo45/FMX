@@ -28,6 +28,8 @@ class EffectDao {
                     effectDataSet = new EffectDataSet(id: Long.valueOf(effect.attribute('id').toString())
                             , target: Target.parseString(effect.attribute('target').toString())
                             , property: Property.parseString(effect.attribute('property').toString())
+                            , itemType: Long.valueOf((effect.attribute('type')?:"0").toString())
+                            , itemSize: Long.valueOf((effect.attribute('size')?:"0").toString())
                             , action: Action.parseString(effect.attribute('action').toString()))
                 }
         }

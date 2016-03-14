@@ -1,7 +1,7 @@
 package effect
 
 enum Property {
-    LEVEL, PROFESSION, RATING
+    LEVEL, PROFESSION, RATING, RACE, ITEM
 
     public static Property parseString(String value){
         switch (value.toLowerCase()){
@@ -11,6 +11,10 @@ enum Property {
                 return PROFESSION
             case "rating":
                 return RATING
+            case "race":
+                return RACE
+            case "item":
+                return ITEM
             default:
                 return null
         }

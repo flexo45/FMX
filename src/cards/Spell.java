@@ -4,7 +4,6 @@ import effect.EffectManager;
 import gamemanager.GameProcessor;
 import gamemanager.Player;
 import log.Log;
-import ui.gametable.InfoPopup;
 
 public class Spell extends BaseCard {
 
@@ -24,7 +23,7 @@ public class Spell extends BaseCard {
                 EffectManager.processEffect(target, effect, power);
             }
             else {
-                Log.print(this, "ERROR: Incorrect target " + target + " for effect " + effect);
+                throw new Exception("Incorrect target " + target + " for effect " + effect);
             }
         }
     }

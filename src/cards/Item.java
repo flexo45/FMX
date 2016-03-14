@@ -1,6 +1,9 @@
 package cards;
 
 import effect.Effect;
+import effect.EffectManager;
+import equipment.EquipmentManager;
+import gamemanager.Player;
 import itemmanager.ItemSize;
 import itemmanager.ItemType;
 
@@ -23,8 +26,16 @@ public class Item extends BaseCard {
     public void setPower(int value) {power = value;}
     public void setCell(int value) {cell = value;}
 
-    public void use(){
-
+    public void use(Object target) throws Exception{
+        if(EquipmentManager.isEquipment(this)){
+            if(Player.class.isInstance(target)){
+                ((Player)target).getEquipment().addItem(this);
+            }
+            else { throw new Exception("Invalid target: " + target); }
+        }
+        else {
+            EffectManager.processEffect(target, effect, power);
+        }
     }
 
     @Override

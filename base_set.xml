@@ -27,11 +27,11 @@
 			<card id="30009" name="Skeleton" level="2" effect="" obscenity="1002" obscenity_value="2" gold="1" info=""/>
 		</monster>
 		<curse>
-			<card id="40000" name="Change race" effect="" info=""/>
-			<card id="40001" name="Lose small item" effect="" info=""/>
-			<card id="40002" name="Lose boots" effect="" info=""/>
-			<card id="40003" name="Lose level" effect="" info=""/>
-			<card id="40004" name="Lose class" effect="" info=""/>
+			<card id="40000" name="Change race" effect="2002" info=""/>
+			<card id="40001" name="Lose small item" effect="5001" info=""/>
+			<card id="40002" name="Lose boots" effect="5002" info=""/>
+			<card id="40003" name="Lose level" effect="1002" power="-1" info=""/>
+			<card id="40004" name="Lose class" effect="2003" info=""/>
 		</curse>
 		<spell>
 			<card id="50000" name="Ambal +10" effect="4003" power="10" info=""/>
@@ -47,7 +47,9 @@
 			<card id="80004" name="Steel plate" type="102" size="11" effect="4001" power="3"/>
 			<card id="80005" name="Leather jacket" type="102" size="10" effect="4001" power="2"/>
 			<card id="80006" name="Chained cap" type="104" size="10" effect="4001" power="1"/>
-			<card id="80006" name="Strong boots" type="103" size="10" effect="4001" power="1"/>
+			<card id="80007" name="Strong boots" type="103" size="10" effect="4001" power="1"/>
+			<card id="80008" name="Strange potion" type="105" size="10" effect="4001" power="3"/>
+			<card id="80009" name="Bomb" type="105" size="10" effect="4003" power="-5"/>
 		</items>
 	</golds>
 	<item_types>
@@ -55,6 +57,8 @@
 		<item id="102" type="armor" />
 		<item id="103" type="boots" />
 		<item id="104" type="cap" />
+		<item id="105" type="potion" />
+		<item id="106" type="other" />
 	</item_types>
 	<item_size>
 		<size id="10" type="small"/>
@@ -70,8 +74,12 @@
 		<effect id="1001" target="player" property="level" action="change" />
 		<effect id="1002" target="player" property="level" action="vary" />
 		<effect id="2001" target="player" property="profession" action="change"/>
+		<effect id="2002" target="player" property="race" action="change"/>
+		<effect id="2003" target="player" property="profession" action="lose"/>
 		<effect id="4001" target="player" property="rating" action="vary" />
 		<effect id="4002" target="player" property="rating" action="change" />
 		<effect id="4003" target="monster" property="level" action="vary" />
+		<effect id="5001" target="player" property="item" size="10" action="lose" />
+		<effect id="5002" target="player" property="item" type="103" action="lose" />
 	</effects>
 </data>

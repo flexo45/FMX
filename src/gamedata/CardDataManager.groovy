@@ -21,6 +21,8 @@ import gamedata.dao.ItemPropertiesDao
 import gamedata.dataset.DoorDataSet
 import gamedata.dataset.EffectDataSet
 import gamedata.dataset.GoldDataSet
+import gamedata.dataset.ItemSizeDataSet
+import gamedata.dataset.ItemTypeDataSet
 import interfaces.ICard
 import itemmanager.ItemSize
 import itemmanager.ItemType
@@ -78,10 +80,7 @@ class CardDataManager {
                     (card as Monster).level = doorDataSet.level
 
                     EffectDataSet effectDataSet = effectDao.get(doorDataSet.obscenity)
-                    (card as Monster).obscenity = new Effect(id: effectDataSet.id
-                            , target: effectDataSet.target
-                            , property: effectDataSet.property
-                            , action: effectDataSet.action)
+                    (card as Monster).obscenity = getEffect(effectDataSet)
 
                     (card as Monster).obscenity_value = doorDataSet.obscenity_value
                     (card as Monster).gold = doorDataSet.gold
@@ -101,10 +100,7 @@ class CardDataManager {
             card.info = doorDataSet.info
             EffectDataSet effectDataSet = effectDao.get(doorDataSet.effect)
             if(effectDataSet != null){
-                card.effect = new Effect(id: effectDataSet.id
-                        , target: effectDataSet.target
-                        , property: effectDataSet.property
-                        , action: effectDataSet.action)
+                card.effect = getEffect(effectDataSet)
             }
         }
         else {
@@ -115,8 +111,8 @@ class CardDataManager {
                     case Item.class:
                         card = new Item()
                         (card as Item).power = goldDataSet.power
-                        (card as Item).size = new ItemSize(name: itemPropertiesDao.getItemSize(goldDataSet.size).type)
-                        (card as Item).type = new ItemType(name: itemPropertiesDao.getItemType(goldDataSet.type).type)
+                        (card as Item).size = getItemSize(itemPropertiesDao.getItemSize(goldDataSet.size))
+                        (card as Item).type = getItemType(itemPropertiesDao.getItemType(goldDataSet.type))
                         (card as Item).cell = goldDataSet.cell
                         break
                     default:
@@ -125,10 +121,7 @@ class CardDataManager {
                 card.name = goldDataSet.name
                 EffectDataSet effectDataSet = effectDao.get(goldDataSet.effect)
                 if(effectDataSet != null){
-                    card.effect = new Effect(id: effectDataSet.id
-                            , target: effectDataSet.target
-                            , property: effectDataSet.property
-                            , action: effectDataSet.action)
+                    card.effect = getEffect(effectDataSet)
                 }
             }
             else {
@@ -147,7 +140,7 @@ class CardDataManager {
 
         equipmentMapDao.getMap().each {
             EquipmentItem equipmentItem = new EquipmentItem(
-                    new ItemType(name: itemPropertiesDao.getItemType(it.type).type), it.cell, it.place)
+                    getItemType(itemPropertiesDao.getItemType(it.type)), it.cell, it.place)
 
             list.add(equipmentItem)
         }
@@ -161,5 +154,22 @@ class CardDataManager {
         if(cardDataDao.isCasdSetOutdate()){
             cards_set = cardDataDao.getCardSet(CARD_SET_PATH)
         }
+    }
+
+    private Effect getEffect(EffectDataSet effectDataSet){
+        return new Effect(id: effectDataSet.id
+                , target: effectDataSet.target
+                , property: effectDataSet.property
+                , action: effectDataSet.action
+                , itemSize: getItemSize(itemPropertiesDao.getItemSize(effectDataSet.itemSize))
+                , itemType: getItemType(itemPropertiesDao.getItemType(effectDataSet.itemType)))
+    }
+
+    private ItemSize getItemSize(ItemSizeDataSet itemSizeDataSet){
+        return new ItemSize(name: itemSizeDataSet.type)
+    }
+
+    private ItemType getItemType(ItemTypeDataSet itemTypeDataSet){
+        return new ItemType(name: itemTypeDataSet.type)
     }
 }

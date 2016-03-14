@@ -18,6 +18,8 @@ class EffectDataSet {
     Target target
     Property property
     Action action
+    Long itemSize
+    Long itemType
 
     @Override
     public String toString(){
