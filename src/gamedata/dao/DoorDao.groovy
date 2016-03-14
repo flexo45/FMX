@@ -40,6 +40,7 @@ class DoorDao {
                                     , obscenity_value: Integer.valueOf((card.attribute('obscenity_value')?:"0").toString())
                                     , gold: Integer.valueOf((card.attribute('gold')?:"0").toString())
                                     , add_level: Integer.valueOf((card.attribute('add_level')?:"1").toString())
+                                    , power: Integer.valueOf((card.attribute('power')?:"0").toString())
                                     , level: Integer.valueOf((card.attribute('level')?:"0").toString()))
                         }
                 }

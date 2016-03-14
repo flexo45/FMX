@@ -33,6 +33,7 @@ class DoorDataSet {
     int obscenity_value
     int gold
     int add_level
+    int power
 
     @Override
     public String toString(){

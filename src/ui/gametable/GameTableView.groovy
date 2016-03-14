@@ -7,15 +7,14 @@ import groovy.swing.SwingBuilder
 import javax.swing.BoxLayout
 import javax.swing.JSplitPane
 import javax.swing.JTable
+import javax.swing.JTextArea
 import javax.swing.border.LineBorder
 import java.awt.Color
 import java.beans.PropertyChangeListener
 
-/**
- * Created by m.guriev on 08.02.2016.
- */
 class GameTableView {
     static SwingBuilder sb = new SwingBuilder()
+    public static JTextArea logTextArea
 
     static def initialize(){
 
@@ -204,16 +203,15 @@ class GameTableView {
                     boxLayout(axis: BoxLayout.PAGE_AXIS)
                     label(text: "Log")
                     scrollPane{
-                        table{
-
-                        }
+                        logTextArea = textArea(background: Color.BLACK, caretColor: Color.WHITE
+                                , disabledTextColor: Color.WHITE, enabled: false)
                     }
                 }
             }
         }
 
         MainWindowView.instance.setContent(content)
-        MainWindowView.instance.setSize(800, 600)
+        MainWindowView.instance.setSize(1024, 768)
         MainWindowView.instance.setTitle("%GAME_NAME% - Game Table")
 
         /*Subscribe model on events by game processor*/

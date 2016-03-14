@@ -38,6 +38,7 @@ class ActionProcessor {
                 PlayerActions.castSpell()
                 break
             case ActionListManager.TRY_RUN:
+                Fight.tryRun()
                 break
             case ActionListManager.NEXT_BATTLE_ROUND:
                 Fight.nextBattleRound()

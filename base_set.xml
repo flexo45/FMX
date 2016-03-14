@@ -34,6 +34,7 @@
 			<card id="40004" name="Lose class" effect="" info=""/>
 		</curse>
 		<spell>
+			<card id="50000" name="Ambal +10" effect="4003" power="10" info=""/>
 		</spell>
 		<event>
 		</event>
@@ -66,10 +67,11 @@
 		<item place="legs" type="103" cell="1" />
 	</equip_map>
 	<effects>
-		<effect id="1001" target="player" property="level" action="increase" />
-		<effect id="1002" target="player" property="level" action="decrease" />
+		<effect id="1001" target="player" property="level" action="change" />
+		<effect id="1002" target="player" property="level" action="vary" />
 		<effect id="2001" target="player" property="profession" action="change"/>
-		<effect id="4001" target="player" property="rating" action="increase" />
-		<effect id="4002" target="player" property="rating" action="decrease" />
+		<effect id="4001" target="player" property="rating" action="vary" />
+		<effect id="4002" target="player" property="rating" action="change" />
+		<effect id="4003" target="monster" property="level" action="vary" />
 	</effects>
 </data>

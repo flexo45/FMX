@@ -33,7 +33,7 @@ public class Monster extends BaseCard {
     public void setObscenity_value(int obscenity_value) {this.obscenity_value = obscenity_value;}
 
 
-    public void obscenity(Player targetPlayer){
+    public void obscenity(Player targetPlayer) throws Exception{
         EffectManager.processEffect(targetPlayer, obscenity, obscenity_value);
     }
 

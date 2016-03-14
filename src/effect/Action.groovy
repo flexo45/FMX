@@ -1,14 +1,14 @@
 package effect
 
 public enum Action {
-    INCREASE, DECREASE, CHANGE
+    CHANGE, LOSE, VARY
 
     public static Action parseString(String value){
         switch (value.toLowerCase()){
-            case "increase":
-                return INCREASE
-            case "decrease":
-                return DECREASE
+            case "lose":
+                return LOSE
+            case "vary":
+                return VARY
             case "change":
                 return CHANGE
             default:

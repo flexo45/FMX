@@ -92,6 +92,7 @@ class CardDataManager {
                     break
                 case Spell.class:
                     card = new Spell()
+                    (card as Spell).power = doorDataSet.power
                     break
                 default:
                     Log.print(this, "ERROR: unknown doorSet: $doorDataSet")

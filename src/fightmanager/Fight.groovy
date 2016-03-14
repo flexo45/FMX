@@ -1,13 +1,12 @@
 package fightmanager
 
 import cards.Monster
-import gamemanager.Game
 import gamemanager.GameProcessor
 import gamemanager.Player
 import interfaces.ICard
-import interfaces.IClass
 import log.Log
 import ui.gametable.ActionListManager
+import dice.Dice
 
 public class Fight {
 
@@ -16,6 +15,10 @@ public class Fight {
 
     int heroBuff = 0;
     int monsterBuff = 0;
+
+    void changeMonsterBuff(int power){
+        monsterBuff = monsterBuff + power
+    }
 
     void getObscenity(){
         monster.obscenity(hero)
@@ -28,6 +31,8 @@ public class Fight {
         GameProcessor.instance.view.playersChangedNotify()
         GameProcessor.instance.view.stackCleared()
         GameProcessor.instance.view.actionChangedNotify(ActionListManager.FIGHT_END)
+
+        closeFight()
     }
 
     void getSuccess(){
@@ -45,6 +50,8 @@ public class Fight {
         GameProcessor.instance.view.playersChangedNotify()
         GameProcessor.instance.view.stackCleared()
         GameProcessor.instance.view.actionChangedNotify(ActionListManager.FIGHT_END)
+
+        closeFight()
     }
 
     boolean isWin(){
@@ -55,6 +62,30 @@ public class Fight {
             return false
         }
     }
+
+    static void tryRun(){
+        int roll = Dice.rollD6()
+        if(roll >= 5){
+            Log.print(this, "INFO: '${GameProcessor.instance.fighting.hero.name}' " +
+                    "successful run from '${GameProcessor.instance.fighting.monster.name}'")
+
+            GameProcessor.instance.view.gameInfoChangedNotify()
+            GameProcessor.instance.view.playerHandChangedNotify()
+            GameProcessor.instance.view.playersChangedNotify()
+            GameProcessor.instance.view.stackCleared()
+            GameProcessor.instance.view.actionChangedNotify(ActionListManager.FIGHT_END)
+
+            closeFight()
+        }
+        else{
+            Log.print(this, "INFO: '${GameProcessor.instance.fighting.hero.name}' " +
+                    "faild to run from '${GameProcessor.instance.fighting.monster.name}'")
+
+            GameProcessor.instance.fighting.getObscenity()
+        }
+    }
+
+    private static void closeFight(){ GameProcessor.instance.fighting = null }
 
     static void nextBattleRound(){
         //TODO process AI

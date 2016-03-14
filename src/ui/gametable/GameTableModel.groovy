@@ -26,6 +26,10 @@ class GameTableModel implements GameTableEvents {
         ActionProcessor.processActions(action)
     }
 
+    public void addLog(String text){
+        GameTableView.logTextArea.append(text)
+    }
+
     @Bindable
     volatile ObservableList player_hand = []
 
