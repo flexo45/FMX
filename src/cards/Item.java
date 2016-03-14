@@ -26,7 +26,7 @@ public class Item extends BaseCard {
     public void setPower(int value) {power = value;}
     public void setCell(int value) {cell = value;}
 
-    public void use(Object target) throws Exception{
+    public void useIt(Object target) throws Exception{
         if(EquipmentManager.isEquipment(this)){
             if(Player.class.isInstance(target)){
                 ((Player)target).getEquipment().addItem(this);

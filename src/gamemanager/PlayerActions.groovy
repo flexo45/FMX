@@ -24,7 +24,7 @@ class PlayerActions {
             try{
                 GameProcessor.instance.getPlayer().equipment.addItem(item)
                 GameProcessor.instance.getPlayer().hand.remove(item)
-                Log.print(this, "Item was used: ${GameProcessor.instance.cardForUsing.name}")
+                Log.print(this, "INFO: Item was used: ${GameProcessor.instance.cardForUsing.name}")
             }
             catch (NoFreeCellException e){
                 InfoPopup.initialize("No free cell for item $item")
@@ -53,23 +53,24 @@ class PlayerActions {
             GameProcessor.instance.view.actionChangedNotify(ActionListManager.FIGHT)
         }
 
-        Log.print(this, "Player fight with monster: ${GameProcessor.instance.cardForUsing.name}")
+        Log.print(this, "INFO: Player fight with monster: ${GameProcessor.instance.cardForUsing.name}")
     }
     static void castSpell(){
         SelectCardPopup.initialize(Spell.class)
         if(GameProcessor.instance.cardForUsing != null){
-            ((Spell)GameProcessor.instance.cardForUsing).cast()
-        }
+            ((Spell)GameProcessor.instance.cardForUsing).cast() //TODO change list
 
-        Log.print(this, "Spell was used: ${GameProcessor.instance.cardForUsing.name}")
+            Log.print(this, "INFO: Spell was used: ${GameProcessor.instance.cardForUsing.name}")
+
+        }
     }
     static void useItem(){
         SelectCardPopup.initialize(Item.class)
         if(GameProcessor.instance.cardForUsing != null){
-            ((Item)GameProcessor.instance.cardForUsing).use()
-        }
+            ((Item)GameProcessor.instance.cardForUsing).useIt() //TODO change list
 
-        Log.print(this, "Item was used: ${GameProcessor.instance.cardForUsing.name}")
+            Log.print(this, "INFO: Item was used: ${GameProcessor.instance.cardForUsing.name}")
+        }
     }
     static void getCardInclosed(){
         ICard card = GameProcessor.instance.game.doors.getNextCard()
@@ -84,7 +85,7 @@ class PlayerActions {
 
         GameProcessor.instance.view.actionChangedNotify(ActionListManager.SECOND_ROUND_END)
 
-        Log.print(this, "Player get card '${card.name}' inclosed!")
+        Log.print(this, "INFO: Player get card '${card.name}' inclosed!")
     }
     static void selectRace(){
         SelectCardPopup.initialize(Race.class)
@@ -99,7 +100,7 @@ class PlayerActions {
 
         GameProcessor.instance.view.playerHandChangedNotify()
 
-        Log.print(this, "Player change race, old: ${oldRace.name}, new: ${((ICard)GameProcessor.instance.getPlayer().race).name}")
+        Log.print(this, "INFO: Player change race, old: ${oldRace.name}, new: ${((ICard)GameProcessor.instance.getPlayer().race).name}")
     }
     static void selectClass(){
         SelectCardPopup.initialize(Profession.class)
@@ -116,7 +117,7 @@ class PlayerActions {
 
         GameProcessor.instance.view.stackCleared()
 
-        Log.print(this, "Player change class, old: ${oldClass.name}, new: ${((ICard)GameProcessor.instance.getPlayer().c1ass).name}")
+        Log.print(this, "INFO: Player change class, old: ${oldClass.name}, new: ${((ICard)GameProcessor.instance.getPlayer().c1ass).name}")
     }
     static void getCardFromStack(){
         GameProcessor.instance.getPlayer().hand.add(CardStackBuffer.cardList.get(0))
@@ -129,7 +130,7 @@ class PlayerActions {
 
         GameProcessor.instance.view.actionChangedNotify(ActionListManager.SECOND_ROUND_BEGIN)
 
-        Log.print(this, "Player get card to hand!")
+        Log.print(this, "INFO: Player get card to hand!")
     }
     static void openDoor(){
         ICard card = GameProcessor.instance.game.doors.getNextCard()
@@ -152,6 +153,6 @@ class PlayerActions {
             GameProcessor.instance.view.actionChangedNotify(ActionListManager.FIRST_ROUND_END)
         }
 
-        Log.print(this, "Door opend! It's a ${card.class.getName()}, ${card.name}")
+        Log.print(this, "INFO: Door opend! It's a ${card.class.getName()}, ${card.name}")
     }
 }
