@@ -27,7 +27,7 @@ class GameTableModel implements GameTableEvents {
     }
 
     public void addLog(String text){
-        GameTableView.logTextArea.append(text)
+        GameTableView.logTextArea.append("$text\r\n")
     }
 
     @Bindable

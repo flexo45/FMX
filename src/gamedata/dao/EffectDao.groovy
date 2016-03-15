@@ -6,14 +6,6 @@ import effect.Target
 import gamedata.CardDataManager
 import gamedata.dataset.EffectDataSet
 
-/*<effects>
-		<effect id="1001" target="player" property="level" action="increase" />
-		<effect id="1002" target="player" property="level" action="decrease" />
-		<effect id="2001" target="player" property="profession" action="change"/>
-		<effect id="4001" target="player" property="rating" action="increase" />
-		<effect id="4002" target="player" property="rating" action="decrease" />
-	</effects>*/
-
 class EffectDao {
     public EffectDataSet get(Long id) {
 

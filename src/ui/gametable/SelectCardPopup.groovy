@@ -14,9 +14,6 @@ import javax.swing.JDialog
 import javax.swing.JTable
 import java.awt.Dimension
 
-/**
- * Created by m.guriev on 11.02.2016.
- */
 class SelectCardPopup {
 
     static void initialize(Class<?> cardClass){
@@ -26,7 +23,7 @@ class SelectCardPopup {
         popup = sb.optionPane().createDialog(MainWindowView.instance.getFrame(), "Select ${cardClass.simpleName}")
 
         popup.contentPane.clear()
-        popup.setMinimumSize(new Dimension(240, 120))
+        popup.setMinimumSize(new Dimension(120, 120))
         def view = sb.panel{
             boxLayout(axis: BoxLayout.Y_AXIS)
             scrollPane(){

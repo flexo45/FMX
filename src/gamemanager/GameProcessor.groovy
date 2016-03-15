@@ -1,5 +1,6 @@
 package gamemanager
 
+import gamedata.CardDataManager
 import gamedata.GameDataManager
 import decks.DoorsDeck
 import decks.GoldsDeck
@@ -15,6 +16,8 @@ import ui.gametable.GameTableView
 
 class GameProcessor {
 
+    private static Log logger = new Log(GameProcessor.class.name)
+
     private static GameProcessor instance
     public static GameProcessor getInstance(){
         if(instance == null) instance = new GameProcessor()
@@ -28,6 +31,7 @@ class GameProcessor {
     public GameTableEvents view
     public volatile Integer round = 1
     public ICard cardForUsing
+    public Object targetForUsing
     public Fight fighting
 
     public Game getGame() { return game }
@@ -57,7 +61,7 @@ class GameProcessor {
             view.actionChangedNotify(ActionListManager.FIRST_ROUND_BEGIN)
         }
 
-        Log.print(this, "next turn processed: {next_player: $currentPlayer, turn: ${game.turn}")
+        logger.info("Next turn processed: {next_player: $currentPlayer, turn: ${game.turn}")
 
         //TODO CONCURENT EXCEPTION
     }
@@ -76,55 +80,53 @@ class GameProcessor {
 
         view.actionChangedNotify(ActionListManager.FIRST_ROUND_BEGIN)
 
-        Log.print(this, "load game processed: {name: ${this.game.gameName}, turn: ${this.game.turn}" +
-                "doors: ${this.game.doors.deck}, golds: ${this.game.golds.deck} }")
+        logger.info("Game '${game.gameName}' loaded successfuly")
     }
 
     public void setNextPlayer(){
+        Player oldPlayer = currentPlayer
         Integer idx = game.playerList.indexOf(currentPlayer)
         if(idx + 1 == game.playerList.size()){ idx = 0 }
         else { ++idx }
         currentPlayer = game.playerList.get(idx)
+
+        logger.info("Next player was selected: $currentPlayer, prev: $oldPlayer")
     }
 
     public void startNewGame(List<Player> players){
         List<ICard> newDoorsDeck = []
         List<ICard> newGoldsDeck = []
 
-        def d_race
-        def d_class
+        def d_race = CardDataManager.instance.getCard(10000)
+
+        logger.debug("startNewGame: default race=$d_race")
+
+        def d_class = CardDataManager.instance.getCard(20000)
+
+        logger.debug("startNewGame: default class=$d_class")
+
         def game_name = ""
         players.each {game_name += it.name + ' '}
-/*
-        CardManager.instance.doorSet.each {
-            c ->
-            if((String)c.get('id') == '10000'){
-                d_race = c.get('card')
-            }
-            else if((String)c.get('id') == '20000'){
-                d_class = c.get('card')
-            }
-            else{
-                Integer i = Integer.parseInt((String)c.get('count'))
-                (0..i).each {
-                    newDoorsDeck.add((ICard)c.get('card'))
-                }
+
+        CardDataManager.instance.getDoorsListId().each {
+            int i = CardDataManager.instance.getCardCountInSet(it)
+            ICard card = CardDataManager.instance.getCard(it)
+            (0..i).each {
+                newDoorsDeck.add(card)
             }
         }
-*/
-        Log.print(this, "new_game_processor, default race: $d_race")
-        Log.print(this, "new_game_processor, default class: $d_class")
-        Log.print(this, "new_game_processor, door deck: $newDoorsDeck")
-/*
-        CardManager.instance.goldSet.each {
-            c ->
-                Integer i = Integer.parseInt((String)c.get('count'))
-                (0..i).each {
-                    newGoldsDeck.add((ICard)c.get('card'))
-                }
+
+        logger.debug("startNewGame: doorDeck=$newDoorsDeck")
+
+        CardDataManager.instance.getGoldsListId().each {
+            int i = CardDataManager.instance.getCardCountInSet(it)
+            ICard card = CardDataManager.instance.getCard(it)
+            (0..i).each {
+                newGoldsDeck.add(card)
+            }
         }
-*/
-        Log.print(this, "gold deck: $newGoldsDeck")
+
+        logger.debug("startNewGame: goldDeck=$newGoldsDeck")
 
         players.each {
             p ->
@@ -133,17 +135,19 @@ class GameProcessor {
         }
 
         game = new Game(playerList: players,
-                defaultClass: d_class,
-                defaultRace: d_race,
+                defaultClass: (IClass)d_class,
+                defaultRace: (IRace)d_race,
                 gameName: game_name,
                 doors: new DoorsDeck(newDoorsDeck, []),
                 golds: new GoldsDeck(newGoldsDeck, []))
 
         game.doors.shuffle()
+
+        logger.debug("startNewGame: shuffled doorsDeck=${game.doors}")
+
         game.golds.shuffle()
 
-        Log.print(this, "new_game_processor, door deck shuffled: ${game.doors}")
-        Log.print(this, "new_game_processor, gold deck shuffled: ${game.golds}")
+        logger.debug("startNewGame: shuffled goldDeck=${game.golds}")
 
         game.playerList.each {
             p ->
@@ -153,12 +157,12 @@ class GameProcessor {
             (0..1).each {
                 p.hand.add(game.golds.getNextCard())
             }
-                Log.print(this, "new_game_processor, player ${p.name} hand: ${p.hand}")
+                logger.debug("startNewGame: $p get hand=${p.hand}")
         }
 
-
-
         currentPlayer = game.playerList.find{ !it.npc }
+
+        logger.debug("startNewGame: found player $currentPlayer")
 
         GameTableView.initialize()
 
@@ -167,6 +171,6 @@ class GameProcessor {
 
         view.actionChangedNotify(ActionListManager.FIRST_ROUND_BEGIN)
 
-        Log.print(this, "new_game_processor, success")
+        logger.info("Starting new game ${game.gameName}")
     }
 }

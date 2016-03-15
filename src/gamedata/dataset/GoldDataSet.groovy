@@ -23,6 +23,7 @@ class GoldDataSet {
     Long effect
     int power
     int cell
+    int count
 
     @Override
     public String toString(){

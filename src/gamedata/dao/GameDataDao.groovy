@@ -4,6 +4,8 @@ import log.Log
 
 class GameDataDao {
 
+    private static Log logger = new Log(GameDataDao.class.name)
+
     private boolean configIsOutofdate
 
     public boolean isConfigOutdate(){
@@ -25,8 +27,6 @@ class GameDataDao {
         bufferedWriter.close()
 
         configIsOutofdate = true
-
-        Log.print(this, "DEBUG: config $path successful updated")
     }
 
     public Node getGameData(String path){
@@ -38,14 +38,14 @@ class GameDataDao {
         }
         catch (FileNotFoundException e){
 
-            Log.print(this, "WARNING: Config not found: $e")
+            logger.error("Config not found $path, default was used", e)
 
             setGameData(path, "<data><settings><card-set path=\"base_set.xml\" /></settings></data>")
 
             fileReader = new FileReader(path)
         }
         catch (IOException e){
-            Log.print(this, "ERROR: open config failed: $e")
+            logger.error("Open default config failed", e)
         }
 
         try{
@@ -66,12 +66,10 @@ class GameDataDao {
             config = parser.parseText(c_text)
         }
         catch (Exception e){
-            Log.print(this, "ERROR: read config failed: $e")
+            logger.error("Read config failed", e)
         }
 
         configIsOutofdate = false
-
-        Log.print(this, "DEBUG: config '$path' successful readed")
 
         return config
     }

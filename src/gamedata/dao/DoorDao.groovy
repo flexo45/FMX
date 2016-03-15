@@ -10,15 +10,10 @@ import gamedata.CardDataManager
 import gamedata.dataset.DoorDataSet
 import log.Log
 
-/**
- * Long id
- String name
- Long effect
- String info
- int count
- int level*/
-
 class DoorDao {
+
+    private static Log logger = new Log(DoorDao.class.name)
+
     public DoorDataSet getDoor(Long id){
 
         DoorDataSet doorDataSet = null
@@ -89,6 +84,7 @@ class DoorDao {
                 classOf = Event.class
                 break
             default:
+                logger.error("invalid door type", new Exception("Unexpected door type"))
                 Log.print(this, "ERROR: invalid type: $type")
         }
 

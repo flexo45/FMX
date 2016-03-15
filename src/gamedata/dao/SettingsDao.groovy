@@ -5,6 +5,8 @@ import log.Log
 
 class SettingsDao {
 
+    private static Log logger = new Log(SettingsDao.class.name)
+
     public String getCardSetPath(){
 
         Node config = GameDataManager.instance.getConfig()
@@ -16,7 +18,7 @@ class SettingsDao {
                     .toString()
         }
         catch (NullPointerException e){
-            Log.print(this, "ERROR: card-set path not found in settings: $e")
+            logger.error("card-set path not found in settings", e)
             return null
         }
     }

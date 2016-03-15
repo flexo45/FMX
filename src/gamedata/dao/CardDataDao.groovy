@@ -4,6 +4,8 @@ import log.Log
 
 class CardDataDao {
 
+    Log logger = new Log(CardDataDao.class.name)
+
     private boolean cardsetIsOutofdate
 
     public boolean isCasdSetOutdate(){
@@ -18,7 +20,7 @@ class CardDataDao {
             fileReader = new FileReader(path)
         }
         catch (Exception e){
-            Log.print(this, "ERROR: open card set failed: ${e.toString()}")
+            logger.error("Open card set failed", e)
         }
 
         try{
@@ -37,12 +39,10 @@ class CardDataDao {
             cards_set = parser.parseText(c_text)
         }
         catch (Exception e){
-            Log.print(this, "ERROR: card set read failed: ${e.toString()}")
+            logger.error("Card set read failed", e)
         }
 
         cardsetIsOutofdate = false
-
-        Log.print(this, "DEBUG: card set successful readed")
 
         return cards_set
     }

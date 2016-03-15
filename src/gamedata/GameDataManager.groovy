@@ -18,6 +18,8 @@ import log.Log
 
 class GameDataManager {
 
+    private static Log logger = new Log(GameDataManager.class.name)
+
     private static GameDataManager instance
 
     private final String CONFIG_FILE_NAME = "game_data.xml"
@@ -43,6 +45,8 @@ class GameDataManager {
         settingsDao = new SettingsDao()
 
         config = gameDataDao.getGameData(CONFIG_FILE_NAME)
+
+        logger.debug("Game config readed")
     }
 
     public Node getConfig(){
@@ -107,6 +111,8 @@ class GameDataManager {
                 , defaultRace: def_race
                 , defaultClass: def_class)
 
+        logger.debug("${game.gameName} successful readed from config: $game")
+
         return game
     }
 
@@ -166,6 +172,7 @@ class GameDataManager {
     private void checkConfig(){
         if(gameDataDao.isConfigOutdate()){
             config = gameDataDao.getGameData(CONFIG_FILE_NAME)
+            logger.debug("Game config updated")
         }
     }
 }

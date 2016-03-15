@@ -30,6 +30,8 @@ import log.Log
 
 class CardDataManager {
 
+    private static Log logger = new Log(CardDataManager.class.name)
+
     private Node cards_set
     private String CARD_SET_PATH
     private CardDataDao cardDataDao
@@ -55,6 +57,8 @@ class CardDataManager {
         itemPropertiesDao = new ItemPropertiesDao()
         equipmentMapDao = new EquipmentMapDao()
         cards_set = cardDataDao.getCardSet(CARD_SET_PATH)
+
+        logger.debug("Card set readed from file: $CARD_SET_PATH")
     }
 
     public Node getCardSet(){
@@ -94,7 +98,8 @@ class CardDataManager {
                     (card as Spell).power = doorDataSet.power
                     break
                 default:
-                    Log.print(this, "ERROR: unknown doorSet: $doorDataSet")
+                    logger.error("Invalid DoorDataSet type ${doorDataSet.type}"
+                            , new Exception("Unexpected door type"))
             }
             card.name = doorDataSet.name
             card.info = doorDataSet.info
@@ -116,7 +121,8 @@ class CardDataManager {
                         (card as Item).cell = goldDataSet.cell
                         break
                     default:
-                        Log.print(this, "ERROR: unknown goldSet: $goldDataSet")
+                        logger.error("Invalid GoldDataSet type ${goldDataSet.type}"
+                                , new Exception("Unexpected gold type"))
                 }
                 card.name = goldDataSet.name
                 EffectDataSet effectDataSet = effectDao.get(goldDataSet.effect)
@@ -125,13 +131,37 @@ class CardDataManager {
                 }
             }
             else {
-                Log.print(this, "ERROR: card not found, id: $id")
+                logger.error("Card not found with id=$id", new Exception("Card not found"))
             }
         }
 
-        Log.print(this, "DEBUG: card $card successful loaded")
+        logger.debug("$card readed")
 
         return card
+    }
+
+    public List<Long> getDoorsListId(){
+        return doorDao.getIdDoors()
+    }
+
+    public List<Long> getGoldsListId(){
+        return goldDao.getIdGolds()
+    }
+
+    public int getCardCountInSet(Long id){
+        DoorDataSet doorDataSet = doorDao.getDoor(id)
+        if(doorDataSet == null){
+            GoldDataSet goldDataSet = goldDao.getGold(id)
+            if(goldDataSet == null){
+                return -1
+            }
+            else {
+                return goldDataSet.count
+            }
+        }
+        else {
+            return doorDataSet.count
+        }
     }
 
     public List<EquipmentItem> getEquipmentMap(){
@@ -145,7 +175,7 @@ class CardDataManager {
             list.add(equipmentItem)
         }
 
-        Log.print(this, "DEBUG: equipment map loaded $list")
+        logger.debug("equipment map readed: $list")
 
         return list
     }
@@ -153,6 +183,7 @@ class CardDataManager {
     private void checkCardSet(){
         if(cardDataDao.isCasdSetOutdate()){
             cards_set = cardDataDao.getCardSet(CARD_SET_PATH)
+            logger.debug("Card set updated")
         }
     }
 
@@ -166,10 +197,12 @@ class CardDataManager {
     }
 
     private ItemSize getItemSize(ItemSizeDataSet itemSizeDataSet){
+        if(itemSizeDataSet == null){ return null }
         return new ItemSize(name: itemSizeDataSet.type)
     }
 
     private ItemType getItemType(ItemTypeDataSet itemTypeDataSet){
+        if(itemTypeDataSet == null) {return null}
         return new ItemType(name: itemTypeDataSet.type)
     }
 }

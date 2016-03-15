@@ -3,11 +3,6 @@ package gamedata.dao
 import gamedata.CardDataManager
 import gamedata.dataset.EquipMapDataSet
 
-
-/*
-* <item place="head" type="104" cell="1"/>
-* **/
-
 class EquipmentMapDao {
 
     public List<EquipMapDataSet> getMap(){

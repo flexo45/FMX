@@ -7,6 +7,8 @@ import log.Log
 
 class GoldDao {
 
+    private static Log logger = new Log(GoldDao.class.name)
+
     public GoldDataSet getGold(Long id){
 
         GoldDataSet goldDataSet = null
@@ -25,6 +27,7 @@ class GoldDao {
                                     , size: Long.valueOf(card.attribute('size').toString())
                                     , effect: Long.valueOf((card.attribute('effect')?:"0").toString())
                                     , power: Integer.valueOf((card.attribute('power')?:"0").toString())
+                                    , count: Integer.valueOf((card.attribute('count')?:"0").toString())
                                     , cell: Integer.valueOf((card.attribute('cell')?:"1").toString())
                                     )
                         }
@@ -32,6 +35,22 @@ class GoldDao {
         }
 
         return goldDataSet
+    }
+
+    public List<Long> getIdGolds(){
+        List<Long> list = []
+
+        (CardDataManager.instance.getCardSet().children().find{Node n -> n.name().equals('golds')} as Node)
+                .children()
+                .each {
+            Node group ->
+                group.children().each {
+                    Node card ->
+                        list.add(Long.valueOf(card.attribute('id').toString()))
+                }
+        }
+
+        return list
     }
 
     private Class getClassOfType(String type){
@@ -43,7 +62,7 @@ class GoldDao {
                 classOf = Item.class
                 break
             default:
-                Log.print(this, "ERROR: invalid type: $type")
+                logger.error("Invalid gold type: $type", new Exception("Unexpected gold type"))
         }
 
         return classOf
