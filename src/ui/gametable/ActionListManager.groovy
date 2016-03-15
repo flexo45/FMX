@@ -19,6 +19,7 @@ class ActionListManager {
     final static String GET_GOLD = 'Winner actions'
     final static String GET_FAIL = 'Loser actions'
     final static String EQUIP_ITEM = 'Equip item'
+    final static String WAIT = 'Wait!'
 
     final static int FIRST_ROUND_BEGIN = 100;
     final static int FIRST_ROUND_END = 120;
@@ -32,6 +33,9 @@ class ActionListManager {
 
     final static int SECOND_ROUND_BEGIN = 200;
     final static int SECOND_ROUND_END = 220;
+
+    final static int OPPONENT_ROUND_BEGIN = 900;
+    final static int OPPONENT_CONTINUE = 1000;
 
     public static List<String> getActions(int situation){
         List<String> list = []
@@ -82,6 +86,12 @@ class ActionListManager {
                 list.add(SELECT_RACE)
                 list.add(SELECT_CLASS)
                 list.add(EQUIP_ITEM)
+                break
+            case OPPONENT_ROUND_BEGIN:
+                list.add(WAIT)
+                break
+            case OPPONENT_CONTINUE:
+                list.add(NEXT)
                 break
         }
 

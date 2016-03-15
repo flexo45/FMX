@@ -11,6 +11,10 @@ public abstract class BaseCard implements ICard {
     String name;
     String info;
     Effect effect;
+    Long id;
+
+    @Override
+    public void setId(Long id) {this.id = id;}
 
     @Override
     public void setName(String name){ this.name = name; }
@@ -20,6 +24,11 @@ public abstract class BaseCard implements ICard {
 
     @Override
     public void setEffect(Effect effect) {this.effect = effect;}
+
+    @Override
+    public Long getId(){
+        return id;
+    }
 
     @Override
     public String getName() {

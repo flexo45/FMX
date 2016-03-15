@@ -5,19 +5,29 @@ import cards.Curse
 import cards.Monster
 import cards.Profession
 import cards.Race
+import fightmanager.Fight
 import gamemanager.CardStackBuffer
 import gamemanager.GameProcessor
+import gamemanager.Player
 import interfaces.ICard
 import interfaces.IClass
 import interfaces.IRace
+import log.Log
+import ui.gametable.ActionListManager
 
 class NPCProcessor {
+
+    private static Log logger = new Log(NPCProcessor.class.name)
+
     static Thread npcTurn
 
     static volatile boolean WAIT = false
 
+    static Player npc
+
     private static void waitPlayerActions(){
-        GameProcessor.instance.view.actionChangedNotify()
+        logger.info("Do something")
+        GameProcessor.instance.view.actionChangedNotify(ActionListManager.OPPONENT_CONTINUE)
         WAIT = true
         while (WAIT){
             npcTurn.sleep(2000)
@@ -26,44 +36,46 @@ class NPCProcessor {
 
     static void processFirstRound(){
 
-        IRace race = (IRace)GameProcessor.instance.currentPlayer.hand.find{ it.class.equals(Race.class)}
-        if(race != null){
-            if(MainLogic.changeRace()) GameProcessor.instance.currentPlayer.race = race
-            GameProcessor.instance.view.playersChangedNotify()
+        npc = GameProcessor.instance.currentPlayer
+
+        if(MainLogic.changeRace()){
+            IRace oldR = npc.race
+            IRace newR = MainLogic.selectRace()
+            npc.race = newR
+            logger.info("$npc change race to $newR from $oldR")
         }
 
-        IClass profession = (IClass)GameProcessor.instance.currentPlayer.hand.find{ it.class.equals(Profession.class)}
-        if(profession != null){
-            if(MainLogic.changeProfession()) GameProcessor.instance.currentPlayer.c1ass = profession
-            GameProcessor.instance.view.playersChangedNotify()
+        if(MainLogic.changeProfession()){
+            IClass oldC = npc.c1ass
+            IClass newC = MainLogic.selectClass()
+            npc.c1ass = newC
+            logger.info("$npc change class to $newC from $oldC")
         }
-
-        waitPlayerActions()
 
         ICard card = GameProcessor.instance.game.doors.getNextCard()
         CardStackBuffer.cardList.add(card)
-        GameProcessor.instance.view.cardAddedInStack(card, "deck -> ${GameProcessor.instance.currentPlayer}")
+        GameProcessor.instance.view.cardAddedInStack(card, "deck -> ${npc.name}")
 
         if(card.class.equals(Monster.class)){
-            GameProcessor.instance.fight = true //FIGHT BEGIN
+            GameProcessor.instance.fighting = new Fight(monster: card as Monster, hero: npc)
 
             waitPlayerActions()
+
+            Fight.nextBattleRound()
 
             GameProcessor.instance.view.stackCleared()
         }
         else if(card.class.equals(Curse.class)){
-            GameProcessor.instance.curse = true //CURSE BEGIN
 
             waitPlayerActions()
 
             GameProcessor.instance.view.stackCleared()
         }
         else {
-            GameProcessor.instance.part = 2 //ROUND 1 PART 2 BEGIN
 
             waitPlayerActions()
 
-            GameProcessor.instance.currentPlayer.hand.add(card)
+            npc.hand.add(card)
 
             GameProcessor.instance.view.stackCleared()
         }
@@ -71,12 +83,9 @@ class NPCProcessor {
 
     static void processSecondRound(){
 
-        GameProcessor.instance.part = 1 //ROUND 1 PART 2 END
-        GameProcessor.instance.round = 2 //ROUND 2 BEGIN
-
         GameProcessor.instance.view.gameInfoChangedNotify()
 
-        if(!GameProcessor.instance.fight){
+        if(GameProcessor.instance.fighting == null){
             //TODO TRY FIGHT
 
             //OR GET SECOND CARD
@@ -90,7 +99,6 @@ class NPCProcessor {
     }
 
     static void processThirdRound(){
-        GameProcessor.instance.round = 3 //ROUND 2 END
 
         GameProcessor.instance.nextTurn()
     }

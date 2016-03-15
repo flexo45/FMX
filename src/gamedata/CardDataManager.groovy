@@ -101,6 +101,7 @@ class CardDataManager {
                     logger.error("Invalid DoorDataSet type ${doorDataSet.type}"
                             , new Exception("Unexpected door type"))
             }
+            card.id = doorDataSet.id
             card.name = doorDataSet.name
             card.info = doorDataSet.info
             EffectDataSet effectDataSet = effectDao.get(doorDataSet.effect)
@@ -124,6 +125,7 @@ class CardDataManager {
                         logger.error("Invalid GoldDataSet type ${goldDataSet.type}"
                                 , new Exception("Unexpected gold type"))
                 }
+                card.id = goldDataSet.id
                 card.name = goldDataSet.name
                 EffectDataSet effectDataSet = effectDao.get(goldDataSet.effect)
                 if(effectDataSet != null){

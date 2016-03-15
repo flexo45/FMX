@@ -55,15 +55,14 @@ class GameProcessor {
         view.gameInfoChangedNotify()
 
         if(currentPlayer.npc){
+            view.actionChangedNotify(ActionListManager.OPPONENT_ROUND_BEGIN)
             new Thread(new NPCTurn()).start()
         }
         else {
             view.actionChangedNotify(ActionListManager.FIRST_ROUND_BEGIN)
         }
 
-        logger.info("Next turn processed: {next_player: $currentPlayer, turn: ${game.turn}")
-
-        //TODO CONCURENT EXCEPTION
+        logger.info("Next turn begin: $currentPlayer, turn: ${game.turn}")
     }
 
     public void loadGame(String gameName){
@@ -109,10 +108,12 @@ class GameProcessor {
         players.each {game_name += it.name + ' '}
 
         CardDataManager.instance.getDoorsListId().each {
-            int i = CardDataManager.instance.getCardCountInSet(it)
-            ICard card = CardDataManager.instance.getCard(it)
-            (0..i).each {
-                newDoorsDeck.add(card)
+            if(it != 10000 && it != 20000){
+                int i = CardDataManager.instance.getCardCountInSet(it)
+                ICard card = CardDataManager.instance.getCard(it)
+                (0..i).each {
+                    newDoorsDeck.add(card)
+                }
             }
         }
 

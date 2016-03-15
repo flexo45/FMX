@@ -61,10 +61,12 @@ class PlayerActions {
             GameProcessor.instance.view.cardAddedInStack(card
                     , "${GameProcessor.instance.player.name} -> self")
 
-            GameProcessor.instance.view.actionChangedNotify(ActionListManager.FIGHT)
-        }
+            GameProcessor.instance.getPlayer().hand.remove(card)
 
-        logger.info("Player fight with monster: $card}")
+            GameProcessor.instance.view.actionChangedNotify(ActionListManager.FIGHT)
+
+            logger.info("Player fight with monster: $card}")
+        }
     }
     static void castSpell(){
         SelectCardPopup.initialize(Spell.class)
@@ -82,6 +84,7 @@ class PlayerActions {
                     logger.info("Can cast in battle only: $spell_card, ignore")
                 }
                 else {
+                    GameProcessor.instance.getPlayer().hand.remove(spell_card)
                     ((Spell)spell_card).cast(target)
 
                     logger.info("Spell $spell_card was used on $target")
@@ -106,6 +109,7 @@ class PlayerActions {
                     logger.info("Can use in battle only: $item_card, ignore")
                 }
                 else {
+                    GameProcessor.instance.getPlayer().hand.remove(item_card)
                     ((Item)item_card).useIt(target)
 
                     logger.info("Item $item_card was used on $target")
@@ -137,6 +141,7 @@ class PlayerActions {
 
         if(newRace != null){
             GameProcessor.instance.getPlayer().race = ((Race)newRace)
+            GameProcessor.instance.getPlayer().hand.remove(newRace)
             logger.info("Player change race, old: ${oldRace}, new: ${((ICard)GameProcessor.instance.getPlayer().race)}")
         }
 
@@ -152,6 +157,7 @@ class PlayerActions {
 
         if(newClass != null){
             GameProcessor.instance.getPlayer().c1ass = ((Profession)newClass)
+            GameProcessor.instance.getPlayer().hand.remove(newClass)
             logger.info("Player change class, old: ${oldClass}, new: ${((ICard)GameProcessor.instance.getPlayer().c1ass)}")
         }
 

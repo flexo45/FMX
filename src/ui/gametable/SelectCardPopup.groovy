@@ -1,6 +1,7 @@
 package ui.gametable
 
 import cards.Item
+import cards.Monster
 import cards.Profession
 import cards.Race
 import cards.Spell
@@ -52,7 +53,6 @@ class SelectCardPopup {
         list.each {
             if(it.get('name').equals(table.getValueAt(table.selectedRow, 0))){
                 GameProcessor.instance.cardForUsing = (ICard)it.get('card')
-                GameProcessor.instance.currentPlayer.hand.remove((ICard)it.get('card'))
             }
         }
         popup.dispose()
@@ -63,6 +63,13 @@ class SelectCardPopup {
             list.clear()
 
         switch (cardClass){
+            case Monster.class:
+                GameProcessor.instance.getPlayer().hand.each {
+                    if(it.class.equals(Monster.class)){
+                        list.add([name: it.name, info: it.info, card: it])
+                    }
+                }
+                break
             case Race.class:
                 GameProcessor.instance.getPlayer().hand.each {
                     if(it.class.equals(Race.class)){
