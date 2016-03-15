@@ -10,6 +10,8 @@ import dice.Dice
 
 public class Fight {
 
+    private static Log logger = new Log(Fight.class.name)
+
     Player hero;
     Monster monster;
 
@@ -23,7 +25,7 @@ public class Fight {
     void getObscenity(){
         monster.obscenity(hero)
 
-        Log.print(this, "INFO: ${hero.name} get obscentity from $monster: ${monster.obscenity} to ${monster.obscenity_value}")
+        logger.info("${hero.name} get obscentity from $monster: ${monster.obscenity} to ${monster.obscenity_value}")
 
         GameProcessor.instance.view.equipmentChangedNotify()
         GameProcessor.instance.view.gameInfoChangedNotify()
@@ -37,11 +39,11 @@ public class Fight {
 
     void getSuccess(){
         hero.level += monster.add_level
-        Log.print(this, "INFO: ${hero.name} increase your level on ${monster.add_level}")
+        logger.info("${hero.name} increase your level on ${monster.add_level}")
 
         for(int i = 0; i < monster.gold; i++){
             ICard card = GameProcessor.instance.game.golds.getNextCard()
-            Log.print(this, "INFO: ${hero.name} get $card for win")
+            logger.info("${hero.name} get $card for win")
             hero.hand.add(card)
         }
 
@@ -66,7 +68,7 @@ public class Fight {
     static void tryRun(){
         int roll = Dice.rollD6()
         if(roll >= 5){
-            Log.print(this, "INFO: '${GameProcessor.instance.fighting.hero.name}' " +
+            logger.info("'${GameProcessor.instance.fighting.hero.name}' " +
                     "successful run from '${GameProcessor.instance.fighting.monster.name}'")
 
             GameProcessor.instance.view.gameInfoChangedNotify()
@@ -78,7 +80,7 @@ public class Fight {
             closeFight()
         }
         else{
-            Log.print(this, "INFO: '${GameProcessor.instance.fighting.hero.name}' " +
+            logger.info("'${GameProcessor.instance.fighting.hero.name}' " +
                     "faild to run from '${GameProcessor.instance.fighting.monster.name}'")
 
             GameProcessor.instance.fighting.getObscenity()
@@ -90,11 +92,11 @@ public class Fight {
     static void nextBattleRound(){
         //TODO process AI
         if(GameProcessor.instance.fighting.isWin()){
-            Log.print(this, "INFO: ${GameProcessor.instance.fighting.hero.name} is win")
+            logger.info("${GameProcessor.instance.fighting.hero.name} is win")
             GameProcessor.instance.view.actionChangedNotify(ActionListManager.FIGHT_WIN)
         }
         else {
-            Log.print(this, "INFO: ${GameProcessor.instance.fighting.hero.name} is lose")
+            logger.info("${GameProcessor.instance.fighting.hero.name} is lose")
             GameProcessor.instance.view.actionChangedNotify(ActionListManager.FIGHT_FAIL)
         }
     }

@@ -23,14 +23,4 @@ class Log {
     public void error(String message, Exception e){
         LoggerModel.error(reporter, "$message\r\n\r\n$e\r\n")
     }
-
-    static void print(Object ob, String message){
-        LoggerModel.debug(ob.getClass().getName(), message)
-
-        if(message.contains("INFO:")){
-            GameTableModel.instance.addLog(message)
-        }
-    }
-
-
 }

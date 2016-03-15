@@ -85,7 +85,6 @@ class DoorDao {
                 break
             default:
                 logger.error("invalid door type", new Exception("Unexpected door type"))
-                Log.print(this, "ERROR: invalid type: $type")
         }
 
         return classOf

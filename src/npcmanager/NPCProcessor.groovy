@@ -11,9 +11,6 @@ import interfaces.ICard
 import interfaces.IClass
 import interfaces.IRace
 
-/**
- * Created by m.guriev on 11.02.2016.
- */
 class NPCProcessor {
     static Thread npcTurn
 

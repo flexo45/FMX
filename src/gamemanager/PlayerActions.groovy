@@ -18,6 +18,9 @@ import ui.gametable.SelectCardPopup
 import ui.gametable.SelectTargetPopup
 
 class PlayerActions {
+
+    private static Log logger = new Log(PlayerActions.class.name)
+
     static void equipItem(){
         SelectCardPopup.initialize(Item.class)
 
@@ -28,13 +31,15 @@ class PlayerActions {
             try{
                 GameProcessor.instance.getPlayer().equipment.addItem(item)
                 GameProcessor.instance.getPlayer().hand.remove(item)
-                Log.print(this, "INFO: Item was used: $item")
+                logger.info("Item was used: $item")
             }
             catch (NoFreeCellException e){
-                Log.print(this, "INFO: No free cell for item: $item")
+                e.toString()
+                logger.info("No free cell for item: $item")
             }
             catch (NotEquipmenItemException e){
-                Log.print(this, "INFO: Item $item can't equiped")
+                e.toString()
+                logger.info("Item $item can't equiped")
             }
         }
 
@@ -59,7 +64,7 @@ class PlayerActions {
             GameProcessor.instance.view.actionChangedNotify(ActionListManager.FIGHT)
         }
 
-        Log.print(this, "INFO: Player fight with monster: $card}")
+        logger.info("Player fight with monster: $card}")
     }
     static void castSpell(){
         SelectCardPopup.initialize(Spell.class)
@@ -74,12 +79,12 @@ class PlayerActions {
             if(target != null){
                 if(spell_card.effect.target == Target.MONSTER &&
                 GameProcessor.instance.fighting == null){
-                    Log.print(this, "INFO: Can cast in battle only: $spell_card, ignore")
+                    logger.info("Can cast in battle only: $spell_card, ignore")
                 }
                 else {
                     ((Spell)spell_card).cast(target)
 
-                    Log.print(this, "INFO: Spell $spell_card was used on $target")
+                    logger.info("Spell $spell_card was used on $target")
                 }
             }
         }
@@ -98,12 +103,12 @@ class PlayerActions {
             if(target != null){
                 if(item_card.effect.target == Target.MONSTER &&
                         GameProcessor.instance.fighting == null){
-                    Log.print(this, "INFO: Can use in battle only: $item_card, ignore")
+                    logger.info("Can use in battle only: $item_card, ignore")
                 }
                 else {
                     ((Item)item_card).useIt(target)
 
-                    Log.print(this, "INFO: Item $item_card was used on $target")
+                    logger.info("Item $item_card was used on $target")
                 }
             }
         }
@@ -111,7 +116,7 @@ class PlayerActions {
     static void getCardInclosed(){
         ICard card = GameProcessor.instance.game.doors.getNextCard()
 
-        Log.print(this, "INFO: Player get the card '$card', description: ${card.info}")
+        logger.info("Player get the card '$card', description: ${card.info}")
 
         GameProcessor.instance.getPlayer().hand.add(card)
 
@@ -121,7 +126,7 @@ class PlayerActions {
 
         GameProcessor.instance.view.actionChangedNotify(ActionListManager.SECOND_ROUND_END)
 
-        Log.print(this, "INFO: Player get card '$card' inclosed!")
+        logger.info("Player get card '$card' inclosed!")
     }
     static void selectRace(){
         SelectCardPopup.initialize(Race.class)
@@ -132,7 +137,7 @@ class PlayerActions {
 
         if(newRace != null){
             GameProcessor.instance.getPlayer().race = ((Race)newRace)
-            Log.print(this, "INFO: Player change race, old: ${oldRace}, new: ${((ICard)GameProcessor.instance.getPlayer().race)}")
+            logger.info("Player change race, old: ${oldRace}, new: ${((ICard)GameProcessor.instance.getPlayer().race)}")
         }
 
         GameProcessor.instance.view.playersChangedNotify()
@@ -147,7 +152,7 @@ class PlayerActions {
 
         if(newClass != null){
             GameProcessor.instance.getPlayer().c1ass = ((Profession)newClass)
-            Log.print(this, "INFO: Player change class, old: ${oldClass}, new: ${((ICard)GameProcessor.instance.getPlayer().c1ass)}")
+            logger.info("Player change class, old: ${oldClass}, new: ${((ICard)GameProcessor.instance.getPlayer().c1ass)}")
         }
 
         GameProcessor.instance.view.playersChangedNotify()
@@ -165,7 +170,7 @@ class PlayerActions {
 
         GameProcessor.instance.view.actionChangedNotify(ActionListManager.SECOND_ROUND_BEGIN)
 
-        Log.print(this, "INFO: Player get card to hand!")
+        logger.info("Player get card to hand!")
     }
     static void openDoor(){
         ICard card = GameProcessor.instance.game.doors.getNextCard()
@@ -188,6 +193,6 @@ class PlayerActions {
             GameProcessor.instance.view.actionChangedNotify(ActionListManager.FIRST_ROUND_END)
         }
 
-        Log.print(this, "INFO: Door opend! It's a ${card}")
+        logger.info("Door opend! It's a ${card}")
     }
 }
