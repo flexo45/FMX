@@ -23,24 +23,4 @@
     <golds>80002;80003;80004;</golds>
     <golds_drop>80008;</golds_drop>
   </game>
-  <game id="Anna Liza Max " turn="1">
-    <players>
-      <player name="Anna" sex="0" level="1" class="20000" race="10000" npc="0"/>
-      <hand>30000;10001;40001;30007;80007;80009;</hand>
-      <equipments/>
-      <player name="Anna" sex="0" level="1" class="20000" race="10000" npc="0"/>
-      <player name="Liza" sex="0" level="1" class="20000" race="10000" npc="1"/>
-      <hand>20001;30001;30006;10001;80002;80006;</hand>
-      <equipments/>
-      <player name="Liza" sex="0" level="1" class="20000" race="10000" npc="1"/>
-      <player name="Max" sex="1" level="1" class="20000" race="10000" npc="1"/>
-      <hand>40000;30003;20004;30002;80004;80001;</hand>
-      <equipments/>
-      <player name="Max" sex="1" level="1" class="20000" race="10000" npc="1"/>
-    </players>
-    <doors>10002;10003;20003;20002;30008;50000;30005;40004;30009;30004;40002;20001;40003;</doors>
-    <doors_drop/>
-    <golds>80005;80008;80003;</golds>
-    <golds_drop/>
-  </game>
 </data>

@@ -1,5 +1,6 @@
 package gamemanager
 
+import ai.MainLogic
 import cards.Item
 import effect.Effect
 import effect.EffectManager
@@ -19,6 +20,7 @@ class Player {
     Integer rating = 0
     Equipment equipment = new Equipment();
     List<Effect> effects = new ArrayList<>();
+    MainLogic ai
 
     public int getRating(){return rating}
     public void setRating(int rating){this.rating = rating}

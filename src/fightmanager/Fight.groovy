@@ -92,12 +92,41 @@ public class Fight {
     static void nextBattleRound(){
         //TODO process AI
         if(GameProcessor.instance.fighting.isWin()){
-            logger.info("${GameProcessor.instance.fighting.hero.name} is win")
+            logger.info("${GameProcessor.instance.fighting.hero.name} is won")
             GameProcessor.instance.view.actionChangedNotify(ActionListManager.FIGHT_WIN)
         }
         else {
             logger.info("${GameProcessor.instance.fighting.hero.name} is lose")
             GameProcessor.instance.view.actionChangedNotify(ActionListManager.FIGHT_FAIL)
+        }
+    }
+
+    static void nextBattleRoundNpc(){
+
+        def hero = GameProcessor.instance.fighting.hero
+        def buff = GameProcessor.instance.fighting.heroBuff
+        def monster = GameProcessor.instance.fighting.monster
+        def monster_buf = GameProcessor.instance.fighting.monsterBuff
+
+        if(GameProcessor.instance.fighting.isWin()){
+            logger.info("player ${hero.name} win monster ${monster.name} with rating: ${hero.getBaseRating() + buff} " +
+                    "to ${monster.level + monster_buf}")
+        }
+        else {
+            logger.info("player ${hero.name} lose monster ${monster.name} with rating: ${hero.getBaseRating() + buff} " +
+                    "to ${monster.level + monster_buf}")
+            GameProcessor.instance.fighting.hero.ai.tryIncreaseRatingInBattle()
+        }
+    }
+
+    static void finishNpc(){
+        if(GameProcessor.instance.fighting.isWin()){
+            logger.info("${GameProcessor.instance.fighting.hero.name} is won")
+            GameProcessor.instance.fighting.getSuccess()
+        }
+        else {
+            logger.info("${GameProcessor.instance.fighting.hero.name} is lose")
+            GameProcessor.instance.fighting.getObscenity()
         }
     }
 

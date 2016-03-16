@@ -1,5 +1,6 @@
 package gamemanager
 
+import cards.Item
 import gamedata.CardDataManager
 import gamedata.GameDataManager
 import decks.DoorsDeck
@@ -32,6 +33,7 @@ class GameProcessor {
     public volatile Integer round = 1
     public ICard cardForUsing
     public Object targetForUsing
+    public Item selectedItem
     public Fight fighting
 
     public Game getGame() { return game }
@@ -72,10 +74,7 @@ class GameProcessor {
 
         GameTableView.initialize()
 
-        view.playersChangedNotify()
-        view.playerHandChangedNotify()
-        view.gameInfoChangedNotify()
-        view.equipmentChangedNotify()
+        view.refreshView()
 
         view.actionChangedNotify(ActionListManager.FIRST_ROUND_BEGIN)
 
@@ -167,8 +166,7 @@ class GameProcessor {
 
         GameTableView.initialize()
 
-        view.playersChangedNotify()
-        view.playerHandChangedNotify()
+        view.refreshView()
 
         view.actionChangedNotify(ActionListManager.FIRST_ROUND_BEGIN)
 

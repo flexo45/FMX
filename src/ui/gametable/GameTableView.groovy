@@ -30,17 +30,17 @@ class GameTableView {
                         label(text: 'Drop')
                         scrollPane{
                             table{
-                                tableModel(id:'doors_drop', list: [/*TODO*/]){
+                                tableModel(id:'doors_drop', list: GameTableModel.instance.doors_drop){
                                     p ->
                                         propertyColumn(header: 'Name', propertyName: 'name')
                                         propertyColumn(header: 'Type', propertyName: 'type')
                                         propertyColumn(header: 'Info', propertyName: 'info')
                                 }
                             }
-                            /*GameWindowModel.instance.dropListDoors.addPropertyChangeListener({
+                            GameTableModel.instance.doors_drop.addPropertyChangeListener({
                                 e ->
                                     doors_drop.fireTableDataChanged()
-                            } as PropertyChangeListener )*/
+                            } as PropertyChangeListener )
                         }
                     }
                     panel(name: "golds", border: new LineBorder(Color.yellow)){
@@ -50,17 +50,17 @@ class GameTableView {
                         label(text: 'Drop')
                         scrollPane{
                             table{
-                                tableModel(id:'gold_drop', list: [/*TODO*/]){
+                                tableModel(id:'gold_drop', list: GameTableModel.instance.golds_drop){
                                     p ->
                                         propertyColumn(header: 'Name', propertyName: 'name')
                                         propertyColumn(header: 'Type', propertyName: 'type')
                                         propertyColumn(header: 'Info', propertyName: 'info')
                                 }
                             }
-                            /*GameWindowModel.instance.dropListGolds.addPropertyChangeListener({
+                            GameTableModel.instance.golds_drop.addPropertyChangeListener({
                                 e ->
                                     gold_drop.fireTableDataChanged()
-                            } as PropertyChangeListener )*/
+                            } as PropertyChangeListener )
                         }
                     }
                 }

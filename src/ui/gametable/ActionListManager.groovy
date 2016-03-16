@@ -14,12 +14,14 @@ class ActionListManager {
     final static String NEXT_BATTLE_ROUND = 'Continue battle'
     final static String TRY_RUN = 'Try to run'
     final static String GET_CURSE = 'Get curse'
+    final static String CAST_CURSE = 'Cast curse'
     final static String FIGHT_WITH_HAND_MON = 'Fight with monster from hand'
     final static String NEXT = 'Continue'
     final static String GET_GOLD = 'Winner actions'
     final static String GET_FAIL = 'Loser actions'
     final static String EQUIP_ITEM = 'Equip item'
     final static String WAIT = 'Wait!'
+    final static String FINISH_NPC = 'Finish battle'
 
     final static int FIRST_ROUND_BEGIN = 100;
     final static int FIRST_ROUND_END = 120;
@@ -36,6 +38,7 @@ class ActionListManager {
 
     final static int OPPONENT_ROUND_BEGIN = 900;
     final static int OPPONENT_CONTINUE = 1000;
+    final static int OPPONENT_FIGHT = 950;
 
     public static List<String> getActions(int situation){
         List<String> list = []
@@ -46,6 +49,7 @@ class ActionListManager {
                 list.add(SELECT_RACE)
                 list.add(SELECT_CLASS)
                 list.add(EQUIP_ITEM)
+                list.add(CAST_CURSE)
                 list.add(SAVE)
                 break
             case FIGHT:
@@ -64,6 +68,7 @@ class ActionListManager {
                 break
             case SECOND_ROUND_BEGIN:
                 list.add(GET_DOOR)
+                list.add(CAST_CURSE)
                 list.add(FIGHT_WITH_HAND_MON)
                 list.add(SELECT_RACE)
                 list.add(SELECT_CLASS)
@@ -92,6 +97,12 @@ class ActionListManager {
                 break
             case OPPONENT_CONTINUE:
                 list.add(NEXT)
+                break
+            case OPPONENT_FIGHT:
+                list.add(CAST_SPELL)
+                list.add(CAST_CURSE)
+                list.add(USE_ITEM)
+                list.add(FINISH_NPC)
                 break
         }
 

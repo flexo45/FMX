@@ -1,11 +1,16 @@
 package npcmanager
 
+import ai.MainLogic
+
 class NPCTurn implements Runnable {
+
+    MainLogic ai
+
     @Override
     void run() {
 
-        NPCProcessor.processFirstRound()
-        NPCProcessor.processSecondRound()
-        NPCProcessor.processThirdRound()
+        NPCProcessor.processFirstRound(ai)
+        NPCProcessor.processSecondRound(ai)
+        NPCProcessor.processThirdRound(ai)
     }
 }

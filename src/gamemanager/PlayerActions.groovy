@@ -85,7 +85,7 @@ class PlayerActions {
                 }
                 else {
                     GameProcessor.instance.getPlayer().hand.remove(spell_card)
-                    ((Spell)spell_card).cast(target)
+                    ((Spell)spell_card).cast(target) //TODO exception handler
 
                     logger.info("Spell $spell_card was used on $target")
                 }
@@ -110,7 +110,7 @@ class PlayerActions {
                 }
                 else {
                     GameProcessor.instance.getPlayer().hand.remove(item_card)
-                    ((Item)item_card).useIt(target)
+                    ((Item)item_card).useIt(target) //TODO exception handler
 
                     logger.info("Item $item_card was used on $target")
                 }

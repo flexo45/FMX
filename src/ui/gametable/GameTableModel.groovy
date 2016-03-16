@@ -30,6 +30,32 @@ class GameTableModel implements GameTableEvents {
         GameTableView.logTextArea.append("$text\r\n")
     }
 
+    public void refreshDoorsDrop(){
+        def drop = []
+        GameProcessor.instance.game.doors.drop.each {
+            drop.add([name: it.name, type: it.class.name, info: it.info])
+        }
+        drop.reverse().each {
+            doors_drop.add(it)
+        }
+    }
+
+    public void refreshGoldsDrop(){
+        def golds = []
+        GameProcessor.instance.game.golds.drop.each {
+            golds.add([name: it.name, type: it.class.name, info: it.info])
+        }
+        golds.reverse().each {
+            golds_drop.add(it)
+        }
+    }
+
+    @Bindable
+    volatile ObservableList doors_drop = []
+
+    @Bindable
+    volatile ObservableList golds_drop = []
+
     @Bindable
     volatile ObservableList player_hand = []
 
@@ -116,5 +142,17 @@ class GameTableModel implements GameTableEvents {
     @Override
     synchronized void stackCleared() {
         stack.clear()
+        refreshDoorsDrop()
+        refreshGoldsDrop()
+    }
+
+    @Override
+    synchronized void refreshView() {
+        playerHandChangedNotify()
+        gameInfoChangedNotify()
+        playersChangedNotify()
+        equipmentChangedNotify()
+        refreshDoorsDrop()
+        refreshGoldsDrop()
     }
 }

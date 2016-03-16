@@ -1,5 +1,6 @@
 package gamedata
 
+import ai.MainLogic
 import cards.Profession
 import cards.Race
 import gamedata.dao.GameDao
@@ -16,6 +17,7 @@ import interfaces.ICard
 import interfaces.IClass
 import interfaces.IRace
 import log.Log
+import npcmanager.NPCTurn
 
 class GameDataManager {
 
@@ -81,6 +83,10 @@ class GameDataManager {
 
                 player.c1ass = (IClass)CardDataManager.instance.getCard(it.c1ass)
                 player.race = (IRace)CardDataManager.instance.getCard(it.race)
+
+                if(player.npc){
+                    player.ai = new MainLogic(player)
+                }
 
                 playerList.add(player)
             }

@@ -55,6 +55,9 @@ class ActionProcessor {
             case ActionListManager.EQUIP_ITEM:
                 PlayerActions.equipItem()
                 break
+            case ActionListManager.FINISH_NPC:
+                Fight.finishNpc()
+                break
         }
     }
 }

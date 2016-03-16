@@ -16,4 +16,6 @@ public interface GameTableEvents {
     void equipmentChangedNotify()
 
     void stackCleared()
+
+    void refreshView()
 }
